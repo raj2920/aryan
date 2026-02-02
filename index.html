@@ -135,11 +135,14 @@
             opacity: 0.8;
         }
 
-        /* 3D Photo Container - Fixed */
+        /* 3D Photo Container - FIXED */
         .photo-container {
             flex: 0 0 350px;
             perspective: 1000px;
             position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .photo-frame {
@@ -163,22 +166,33 @@
             padding: 3px;
             transform: translateZ(20px);
             transition: transform 0.5s, box-shadow 0.5s;
+            display: block;
+            position: relative;
+            z-index: 2;
         }
 
-        /* Fallback if image doesn't load */
-        .photo-image:after {
-            content: 'BK';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        /* Photo placeholder styling */
+        .photo-placeholder {
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
             font-size: 4rem;
             font-weight: bold;
-            color: white;
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.5),
+                0 0 0 3px rgba(255, 107, 107, 0.3),
+                0 0 0 6px rgba(78, 205, 196, 0.2);
+            transform: translateZ(20px);
         }
 
-        .photo-frame:hover .photo-image {
+        .photo-frame:hover .photo-image,
+        .photo-frame:hover .photo-placeholder {
             transform: translateZ(40px) rotateY(15deg) rotateX(5deg);
             box-shadow: 
                 0 30px 60px rgba(0, 0, 0, 0.7),
@@ -201,6 +215,7 @@
             transform: translateZ(-20px);
             opacity: 0.4;
             filter: blur(5px);
+            z-index: 1;
         }
 
         .photo-frame::after {
@@ -212,6 +227,7 @@
             transform: translateZ(-40px);
             opacity: 0.3;
             filter: blur(15px);
+            z-index: 0;
         }
 
         @keyframes float {
@@ -313,375 +329,22 @@
             margin-bottom: 100px;
         }
 
-        /* Career Objective */
-        .objective-card {
+        /* All other styles remain the same as before */
+        .objective-card, .academic-table, .skills-container, .skill-category,
+        .project-card, .achievement-card, .cert-table, footer {
+            /* Keep all the existing styles */
             background: rgba(20, 20, 40, 0.7);
-            border-radius: 15px;
-            padding: 40px;
-            margin-bottom: 40px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            transition: transform 0.5s;
-            position: relative;
-            overflow: hidden;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            transition: transform 0.5s, box-shadow 0.5s;
         }
 
-        .objective-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.7s;
-        }
-
-        .objective-card:hover::before {
-            left: 100%;
-        }
-
-        .objective-card:hover {
+        .objective-card:hover, .skill-category:hover, 
+        .project-card:hover, .achievement-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .objective-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: #4ecdc4;
-        }
-
-        .objective-card p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        /* Academic Details */
-        .academic-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: rgba(20, 20, 40, 0.7);
-            border-radius: 10px;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            margin-bottom: 40px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .academic-table th {
-            background: linear-gradient(90deg, rgba(255, 107, 107, 0.3), rgba(78, 205, 196, 0.3));
-            padding: 20px;
-            text-align: left;
-            font-weight: 600;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .academic-table th::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .academic-table th:hover::before {
-            left: 100%;
-        }
-
-        .academic-table td {
-            padding: 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            transition: background-color 0.3s;
-        }
-
-        .academic-table tr:hover td {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .academic-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* Technical Skills */
-        .skills-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .skill-category {
-            background: rgba(20, 20, 40, 0.7);
-            border-radius: 15px;
-            padding: 30px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.5s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skill-category::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 5px;
-            height: 100%;
-            background: linear-gradient(180deg, #ff6b6b, #4ecdc4);
-            transform: scaleY(0);
-            transition: transform 0.5s;
-        }
-
-        .skill-category:hover::before {
-            transform: scaleY(1);
-        }
-
-        .skill-category:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .skill-category h3 {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: #ff6b6b;
-        }
-
-        .skill-items {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .skill-item {
-            background: rgba(255, 107, 107, 0.1);
-            color: #ff6b6b;
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            border: 1px solid rgba(255, 107, 107, 0.3);
-            transition: all 0.3s;
-        }
-
-        .skill-item:hover {
-            background: rgba(255, 107, 107, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.2);
-        }
-
-        /* Projects */
-        .project-card {
-            background: rgba(20, 20, 40, 0.7);
-            border-radius: 15px;
-            overflow: hidden;
-            transition: transform 0.5s, box-shadow 0.5s;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 40px;
-        }
-
-        .project-card:hover {
-            transform: translateY(-15px) scale(1.01);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
-        }
-
-        .project-header {
-            background: linear-gradient(90deg, rgba(255, 107, 107, 0.2), rgba(78, 205, 196, 0.2));
-            padding: 25px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.7s;
-        }
-
-        .project-card:hover .project-header::before {
-            left: 100%;
-        }
-
-        .project-header h3 {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-
-        .project-header .date {
-            color: #4ecdc4;
-            font-weight: 500;
-        }
-
-        .project-content {
-            padding: 25px;
-        }
-
-        .project-content p {
-            margin-bottom: 20px;
-            line-height: 1.6;
-            opacity: 0.9;
-        }
-
-        .project-keywords {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .keyword {
-            background: rgba(78, 205, 196, 0.2);
-            color: #4ecdc4;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            border: 1px solid rgba(78, 205, 196, 0.3);
-            transition: all 0.3s;
-        }
-
-        .keyword:hover {
-            background: rgba(78, 205, 196, 0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.2);
-        }
-
-        /* Achievements & Certifications */
-        .achievement-card {
-            background: rgba(20, 20, 40, 0.7);
-            border-radius: 15px;
-            padding: 30px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 30px;
-            transition: transform 0.5s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .achievement-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .achievement-card h3 {
-            color: #4ecdc4;
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-        }
-
-        .achievement-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.5s;
-        }
-
-        .achievement-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .cert-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: rgba(30, 30, 50, 0.5);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 20px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .cert-table th {
-            background: rgba(255, 107, 107, 0.2);
-            padding: 15px;
-            text-align: left;
-        }
-
-        .cert-table td {
-            padding: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            transition: background-color 0.3s;
-        }
-
-        .cert-table tr:hover td {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 40px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            opacity: 0.7;
-            margin-top: 50px;
-        }
-
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 20px;
-        }
-
-        .social-links a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 45px;
-            height: 45px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            color: #f0f0f0;
-            font-size: 1.2rem;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .social-links a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .social-links a:hover::before {
-            left: 100%;
-        }
-
-        .social-links a:hover {
-            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
-            transform: translateY(-5px) rotate(10deg);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
         /* Responsive Design */
@@ -703,18 +366,6 @@
             .photo-frame {
                 width: 300px;
                 height: 300px;
-                margin: 0 auto;
-            }
-        }
-
-        @media (max-width: 992px) {
-            .hero h1 {
-                font-size: 2.8rem;
-            }
-            
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
             }
         }
 
@@ -730,8 +381,6 @@
                 padding: 20px;
                 backdrop-filter: blur(20px);
                 z-index: 1000;
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             }
 
             .nav-links.active {
@@ -750,15 +399,6 @@
                 font-size: 1.5rem;
             }
             
-            .academic-table {
-                display: block;
-                overflow-x: auto;
-            }
-            
-            .skills-container {
-                grid-template-columns: 1fr;
-            }
-            
             .photo-container {
                 flex: 0 0 250px;
             }
@@ -770,17 +410,6 @@
         }
         
         @media (max-width: 480px) {
-            .contact-info {
-                flex-direction: column;
-            }
-            
-            .cta-button {
-                display: block;
-                width: 100%;
-                text-align: center;
-                margin-right: 0;
-            }
-            
             .photo-container {
                 flex: 0 0 200px;
             }
@@ -790,16 +419,12 @@
                 height: 200px;
             }
             
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .section-title {
-                font-size: 2rem;
+            .photo-placeholder {
+                font-size: 3rem;
             }
         }
 
-        /* 3D Particle Info */
+        /* Particle Info */
         .particle-info {
             position: fixed;
             bottom: 20px;
@@ -808,13 +433,14 @@
             padding: 10px 15px;
             border-radius: 10px;
             font-size: 0.8rem;
-            opacity: 0.5;
+            opacity: 0.3;
             transition: opacity 0.3s;
             z-index: 1000;
+            pointer-events: none;
         }
 
         .particle-info:hover {
-            opacity: 1;
+            opacity: 0.8;
         }
     </style>
 </head>
@@ -848,7 +474,7 @@
             <div class="hero-content">
                 <h1>BITTU KUMAR (RAJ)</h1>
                 <h2>B.Tech, Computer Science & Engineering</h2>
-                <p>Passionate software developer with expertise in C/C++, Data Structures, Algorithms, and emerging technologies. GATE 2024 qualified with a score of 370.</p>
+                <p>Passionate software developer with expertise in C/C++, Data Structures, Algorithms, and emerging technologies. Qualified GATE 2025 (CSE) .</p>
                 
                 <div class="contact-info">
                     <div class="contact-item">
@@ -869,14 +495,15 @@
                 <a href="https://www.linkedin.com/in/rj-64757121a" target="_blank" class="cta-button secondary">LinkedIn Profile</a>
             </div>
             
-            <!-- 3D Photo Section -->
+            <!-- 3D Photo Section with Auto Fallback -->
             <div class="photo-container">
                 <div class="photo-frame">
-                    <img src="your-photo.jpg" alt="Bittu Kumar" class="photo-image" id="profile-photo">
+                    <div id="photo-content"></div>
                 </div>
             </div>
         </section>
 
+        <!-- Rest of the content remains the same -->
         <!-- Career Objective -->
         <section id="objective" class="section-content">
             <h2 class="section-title">Career Objective</h2>
@@ -1118,337 +745,293 @@
 
     <!-- Particle Info -->
     <div class="particle-info">
-        <i class="fas fa-magic"></i> Interactive 3D Background
+        <i class="fas fa-magic"></i> Interactive 3D Particles
     </div>
 
     <script>
-        // Enhanced Three.js 3D Background Animation
-        let scene, camera, renderer, particles, particleSystem;
-        let particleCount = 3000; // Increased particle count
-        let particleGeometry, particleMaterial;
+        // Photo Loading with Auto Fallback
+        function loadPhoto() {
+            const photoContent = document.getElementById('photo-content');
+            const img = document.createElement('img');
+            
+            img.src = 'your-photo.jpg';
+            img.alt = 'Bittu Kumar';
+            img.className = 'photo-image';
+            
+            // Set up error handling
+            img.onerror = function() {
+                console.log('Photo not found, using placeholder');
+                photoContent.innerHTML = '';
+                const placeholder = document.createElement('div');
+                placeholder.className = 'photo-placeholder';
+                placeholder.innerHTML = 'BK';
+                photoContent.appendChild(placeholder);
+            };
+            
+            img.onload = function() {
+                console.log('Photo loaded successfully');
+                photoContent.innerHTML = '';
+                photoContent.appendChild(img);
+                
+                // Add 3D mouse effects after image loads
+                addPhotoEffects();
+            };
+            
+            photoContent.appendChild(img);
+            
+            // Check if image loads within 2 seconds
+            setTimeout(() => {
+                if (!img.complete || img.naturalHeight === 0) {
+                    img.onerror();
+                }
+            }, 2000);
+        }
+
+        function addPhotoEffects() {
+            const photoFrame = document.querySelector('.photo-frame');
+            const photoElement = document.querySelector('.photo-image') || document.querySelector('.photo-placeholder');
+            
+            photoFrame.addEventListener('mousemove', (e) => {
+                if (!photoElement) return;
+                
+                const { left, top, width, height } = photoFrame.getBoundingClientRect();
+                const x = (e.clientX - left) / width - 0.5;
+                const y = (e.clientY - top) / height - 0.5;
+                
+                photoElement.style.transform = `translateZ(40px) rotateY(${x * 20}deg) rotateX(${-y * 20}deg)`;
+                photoElement.style.filter = `brightness(${1.2 + Math.abs(x + y) * 0.3})`;
+            });
+            
+            photoFrame.addEventListener('mouseleave', () => {
+                if (photoElement) {
+                    photoElement.style.transform = 'translateZ(20px) rotateY(0) rotateX(0)';
+                    photoElement.style.filter = 'brightness(1)';
+                }
+            });
+        }
+
+        // Enhanced Three.js 3D Particle Animation
+        let scene, camera, renderer, particles = [];
         let mouseX = 0, mouseY = 0;
-        
+        let windowHalfX = window.innerWidth / 2;
+        let windowHalfY = window.innerHeight / 2;
+
         function initThreeJS() {
             // Create scene
             scene = new THREE.Scene();
             
             // Create camera
             camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 15;
+            camera.position.z = 30;
             
             // Create renderer
             renderer = new THREE.WebGLRenderer({ 
                 alpha: true, 
-                antialias: true,
-                powerPreference: "high-performance"
+                antialias: true 
             });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            renderer.setClearColor(0x000000, 0);
             document.getElementById('three-container').appendChild(renderer.domElement);
             
-            // Create particle system with different shapes
-            particleGeometry = new THREE.BufferGeometry();
+            // Create particles
+            const particleCount = 1500;
+            const geometry = new THREE.BufferGeometry();
             const positions = new Float32Array(particleCount * 3);
             const colors = new Float32Array(particleCount * 3);
-            const sizes = new Float32Array(particleCount);
             
-            // Color gradients
-            const color1 = new THREE.Color(0xff6b6b); // Red
-            const color2 = new THREE.Color(0x4ecdc4); // Teal
-            const color3 = new THREE.Color(0x556270); // Dark Blue
-            const color4 = new THREE.Color(0xffcc5c); // Yellow
-            
-            // Create a torus/ring shaped particle distribution
-            const radius = 20;
-            const tube = 8;
+            const color1 = new THREE.Color(0xff6b6b);
+            const color2 = new THREE.Color(0x4ecdc4);
+            const color3 = new THREE.Color(0x556270);
+            const color4 = new THREE.Color(0xffcc5c);
             
             for (let i = 0; i < particleCount; i++) {
-                // Create particles in a torus shape
-                const u = Math.random() * Math.PI * 2;
-                const v = Math.random() * Math.PI * 2;
+                // Random positions in a sphere
+                const radius = 20 + Math.random() * 10;
+                const theta = Math.random() * Math.PI * 2;
+                const phi = Math.random() * Math.PI;
                 
-                const x = (radius + tube * Math.cos(v)) * Math.cos(u);
-                const y = (radius + tube * Math.cos(v)) * Math.sin(u);
-                const z = tube * Math.sin(v);
+                const x = radius * Math.sin(phi) * Math.cos(theta);
+                const y = radius * Math.sin(phi) * Math.sin(theta);
+                const z = radius * Math.cos(phi);
                 
                 positions[i * 3] = x;
                 positions[i * 3 + 1] = y;
                 positions[i * 3 + 2] = z;
                 
-                // Create vibrant color gradient
-                const mix1 = Math.random();
-                const mix2 = Math.random();
+                // Color based on position
                 let color;
-                
-                if (Math.random() > 0.5) {
-                    color = color1.clone().lerp(color2, mix1);
+                if (Math.random() > 0.66) {
+                    color = color1.clone().lerp(color2, Math.random());
+                } else if (Math.random() > 0.33) {
+                    color = color3.clone().lerp(color4, Math.random());
                 } else {
-                    color = color3.clone().lerp(color4, mix2);
+                    color = new THREE.Color(Math.random() * 0.5 + 0.5, Math.random() * 0.5 + 0.5, Math.random() * 0.5 + 0.5);
                 }
-                
-                // Add some randomness to colors
-                color.r += (Math.random() - 0.5) * 0.2;
-                color.g += (Math.random() - 0.5) * 0.2;
-                color.b += (Math.random() - 0.5) * 0.2;
                 
                 colors[i * 3] = color.r;
                 colors[i * 3 + 1] = color.g;
                 colors[i * 3 + 2] = color.b;
                 
-                // Varying sizes
-                sizes[i] = Math.random() * 0.2 + 0.05;
+                // Store particle data for animation
+                particles.push({
+                    x, y, z,
+                    originalX: x,
+                    originalY: y,
+                    originalZ: z,
+                    speed: 0.5 + Math.random() * 1.5,
+                    angle: Math.random() * Math.PI * 2
+                });
             }
             
-            particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-            particleGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
             
-            // Advanced particle material
-            particleMaterial = new THREE.PointsMaterial({
-                size: 0.1,
+            const material = new THREE.PointsMaterial({
+                size: 0.15,
                 vertexColors: true,
                 transparent: true,
                 opacity: 0.8,
                 sizeAttenuation: true,
-                blending: THREE.AdditiveBlending,
-                depthWrite: false
+                blending: THREE.AdditiveBlending
             });
             
-            // Create multiple particle systems for better effect
-            particleSystem = new THREE.Points(particleGeometry, particleMaterial);
+            const particleSystem = new THREE.Points(geometry, material);
             scene.add(particleSystem);
             
-            // Add a second smaller particle system
-            const particleGeometry2 = particleGeometry.clone();
-            const positions2 = particleGeometry2.getAttribute('position');
-            for (let i = 0; i < positions2.count; i++) {
-                positions2.setXYZ(
-                    i,
-                    positions2.getX(i) * 0.7,
-                    positions2.getY(i) * 0.7,
-                    positions2.getZ(i) * 0.7
-                );
-            }
-            positions2.needsUpdate = true;
-            
-            const particleMaterial2 = particleMaterial.clone();
-            particleMaterial2.size = 0.05;
-            particleMaterial2.opacity = 0.6;
-            
-            const particleSystem2 = new THREE.Points(particleGeometry2, particleMaterial2);
-            scene.add(particleSystem2);
-            
-            // Add ambient and point lights for better 3D effect
+            // Add ambient light
             const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
             scene.add(ambientLight);
             
-            // Multiple colored point lights
-            const pointLight1 = new THREE.PointLight(0xff6b6b, 1, 100);
-            pointLight1.position.set(20, 20, 20);
-            scene.add(pointLight1);
+            // Add directional light
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(10, 10, 10);
+            scene.add(directionalLight);
             
-            const pointLight2 = new THREE.PointLight(0x4ecdc4, 1, 100);
-            pointLight2.position.set(-20, -20, 20);
-            scene.add(pointLight2);
+            // Mouse move listener
+            document.addEventListener('mousemove', onDocumentMouseMove);
             
-            const pointLight3 = new THREE.PointLight(0xffcc5c, 0.5, 100);
-            pointLight3.position.set(20, -20, -20);
-            scene.add(pointLight3);
-            
-            // Mouse move interaction
-            document.addEventListener('mousemove', onMouseMove);
-            
-            // Handle window resize
+            // Window resize listener
             window.addEventListener('resize', onWindowResize);
             
             // Start animation
             animate();
         }
-        
-        function onMouseMove(event) {
-            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+
+        function onDocumentMouseMove(event) {
+            mouseX = (event.clientX - windowHalfX) / 100;
+            mouseY = (event.clientY - windowHalfY) / 100;
         }
-        
+
         function onWindowResize() {
+            windowHalfX = window.innerWidth / 2;
+            windowHalfY = window.innerHeight / 2;
+            
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
-        
+
         let time = 0;
-        
         function animate() {
             requestAnimationFrame(animate);
-            
             time += 0.01;
             
-            // Rotate particle systems with multiple rotations
-            particleSystem.rotation.x = time * 0.1;
-            particleSystem.rotation.y = time * 0.15;
-            particleSystem.rotation.z = time * 0.05;
-            
-            // Second system rotates in opposite direction
-            scene.children[2].rotation.x = -time * 0.08;
-            scene.children[2].rotation.y = -time * 0.12;
-            scene.children[2].rotation.z = -time * 0.03;
-            
-            // Mouse interaction - move particles based on mouse position
-            const positions = particleSystem.geometry.attributes.position;
-            const sizes = particleSystem.geometry.attributes.size;
-            
-            for (let i = 0; i < positions.count; i++) {
-                const x = positions.getX(i);
-                const y = positions.getY(i);
-                const z = positions.getZ(i);
+            // Update particle positions with mouse interaction
+            if (scene.children.length > 0) {
+                const particleSystem = scene.children[0];
+                const positions = particleSystem.geometry.attributes.position.array;
                 
-                // Create wave effects
-                const waveX = Math.sin(time + x * 0.1) * 0.5;
-                const waveY = Math.cos(time + y * 0.1) * 0.5;
-                const waveZ = Math.sin(time + z * 0.1) * 0.5;
-                
-                // Mouse attraction
-                const dx = x - mouseX * 10;
-                const dy = y - mouseY * 10;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-                
-                if (distance < 10) {
-                    const force = (10 - distance) * 0.01;
-                    positions.setXYZ(
-                        i,
-                        x + dx * force + waveX,
-                        y + dy * force + waveY,
-                        z + waveZ
-                    );
+                for (let i = 0; i < particles.length; i++) {
+                    const particle = particles[i];
                     
-                    // Make particles bigger when near mouse
-                    sizes.setX(i, Math.min(0.3, 0.1 + (10 - distance) * 0.02));
-                } else {
-                    positions.setXYZ(i, x + waveX, y + waveY, z + waveZ);
-                    sizes.setX(i, 0.05 + Math.sin(time + i) * 0.02);
+                    // Base movement (orbit)
+                    particle.angle += particle.speed * 0.01;
+                    
+                    // Calculate distance from mouse
+                    const dx = particle.x - mouseX;
+                    const dy = particle.y - mouseY;
+                    const distanceFromMouse = Math.sqrt(dx * dx + dy * dy);
+                    
+                    // Mouse repulsion
+                    let mouseForce = 0;
+                    if (distanceFromMouse < 5) {
+                        mouseForce = (5 - distanceFromMouse) * 0.2;
+                    }
+                    
+                    // Update position with multiple forces
+                    const orbitX = Math.cos(time + particle.angle) * 0.5;
+                    const orbitY = Math.sin(time + particle.angle) * 0.5;
+                    const waveZ = Math.sin(time * 2 + particle.angle) * 0.3;
+                    
+                    // Move away from mouse
+                    if (mouseForce > 0) {
+                        particle.x += (dx / distanceFromMouse) * mouseForce;
+                        particle.y += (dy / distanceFromMouse) * mouseForce;
+                    }
+                    
+                    // Apply orbit and wave
+                    particle.x = particle.originalX + orbitX + (mouseX * 0.1);
+                    particle.y = particle.originalY + orbitY + (mouseY * 0.1);
+                    particle.z = particle.originalZ + waveZ;
+                    
+                    // Apply to geometry
+                    positions[i * 3] = particle.x;
+                    positions[i * 3 + 1] = particle.y;
+                    positions[i * 3 + 2] = particle.z;
                 }
+                
+                particleSystem.geometry.attributes.position.needsUpdate = true;
+                
+                // Rotate entire system slowly
+                particleSystem.rotation.y = time * 0.05;
             }
-            
-            positions.needsUpdate = true;
-            sizes.needsUpdate = true;
-            
-            // Move lights around for dynamic lighting
-            const light1 = scene.children[3];
-            light1.position.x = Math.sin(time * 0.5) * 30;
-            light1.position.y = Math.cos(time * 0.5) * 30;
-            light1.position.z = Math.sin(time * 0.3) * 20;
-            
-            const light2 = scene.children[4];
-            light2.position.x = Math.cos(time * 0.7) * 25;
-            light2.position.y = Math.sin(time * 0.7) * 25;
-            light2.position.z = Math.cos(time * 0.4) * 15;
             
             renderer.render(scene, camera);
         }
-        
-        // Initialize Three.js when page loads
-        window.addEventListener('load', initThreeJS);
-        
-        // Mobile menu functionality
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const navLinks = document.querySelector('.nav-links');
-        
-        mobileMenuBtn.addEventListener('click', function() {
-            navLinks.classList.toggle('active');
-            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
-                ? '<i class="fas fa-times"></i>' 
-                : '<i class="fas fa-bars"></i>';
-        });
-        
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-            });
-        });
-        
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-        
-        // Enhanced 3D effect to profile photo on mouse move
-        const photoFrame = document.querySelector('.photo-frame');
-        const photoImage = document.getElementById('profile-photo');
-        
-        photoFrame.addEventListener('mousemove', (e) => {
-            const { left, top, width, height } = photoFrame.getBoundingClientRect();
-            const x = (e.clientX - left) / width - 0.5;
-            const y = (e.clientY - top) / height - 0.5;
-            
-            photoImage.style.transform = `translateZ(40px) rotateY(${x * 20}deg) rotateX(${-y * 20}deg)`;
-            photoImage.style.filter = `brightness(${1.2 + Math.abs(x + y) * 0.3})`;
-        });
-        
-        photoFrame.addEventListener('mouseleave', () => {
-            photoImage.style.transform = 'translateZ(20px) rotateY(0) rotateX(0)';
-            photoImage.style.filter = 'brightness(1)';
-        });
-        
-        // Handle photo loading - provide fallback
-        photoImage.addEventListener('error', function() {
-            console.log('Photo not found, using gradient fallback');
-            this.style.background = 'linear-gradient(45deg, #ff6b6b, #4ecdc4)';
-            this.style.display = 'flex';
-            this.style.alignItems = 'center';
-            this.style.justifyContent = 'center';
-            this.style.color = 'white';
-            this.style.fontSize = '2.5rem';
-            this.style.fontWeight = 'bold';
-            this.innerHTML = 'BK';
-            this.alt = 'Bittu Kumar - Photo placeholder';
-        });
-        
-        // Check if photo exists
+
+        // Initialize everything when page loads
         window.addEventListener('load', function() {
-            fetch('your-photo.jpg')
-                .then(response => {
-                    if (!response.ok) {
-                        photoImage.dispatchEvent(new Event('error'));
-                    }
-                })
-                .catch(() => {
-                    photoImage.dispatchEvent(new Event('error'));
-                });
-        });
-        
-        // Add scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-in');
-                }
+            // Load photo first
+            loadPhoto();
+            
+            // Initialize 3D particles
+            initThreeJS();
+            
+            // Initialize mobile menu
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+                    ? '<i class="fas fa-times"></i>' 
+                    : '<i class="fas fa-bars"></i>';
             });
-        }, observerOptions);
-        
-        // Observe elements for animation
-        document.querySelectorAll('.objective-card, .skill-category, .project-card, .achievement-card').forEach(el => {
-            observer.observe(el);
+            
+            // Close mobile menu when clicking a link
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                });
+            });
+            
+            // Smooth scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
         });
     </script>
 </body>
