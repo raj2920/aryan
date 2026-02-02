@@ -135,10 +135,11 @@
             opacity: 0.8;
         }
 
-        /* 3D Photo Container */
+        /* 3D Photo Container - Fixed */
         .photo-container {
             flex: 0 0 350px;
             perspective: 1000px;
+            position: relative;
         }
 
         .photo-frame {
@@ -154,17 +155,35 @@
             height: 100%;
             border-radius: 20px;
             object-fit: cover;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-            border: 3px solid transparent;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4) border-box;
-            background-origin: border-box;
-            background-clip: content-box, border-box;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.5),
+                0 0 0 3px rgba(255, 107, 107, 0.3),
+                0 0 0 6px rgba(78, 205, 196, 0.2);
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            padding: 3px;
             transform: translateZ(20px);
-            transition: transform 0.5s;
+            transition: transform 0.5s, box-shadow 0.5s;
+        }
+
+        /* Fallback if image doesn't load */
+        .photo-image:after {
+            content: 'BK';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
         .photo-frame:hover .photo-image {
-            transform: translateZ(30px) rotateY(10deg);
+            transform: translateZ(40px) rotateY(15deg) rotateX(5deg);
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.7),
+                0 0 0 5px rgba(255, 107, 107, 0.4),
+                0 0 0 10px rgba(78, 205, 196, 0.3);
         }
 
         .photo-frame::before,
@@ -179,8 +198,9 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(45deg, #4ecdc4, #ff6b6b);
-            transform: translateZ(-10px);
-            opacity: 0.3;
+            transform: translateZ(-20px);
+            opacity: 0.4;
+            filter: blur(5px);
         }
 
         .photo-frame::after {
@@ -188,10 +208,10 @@
             height: 90%;
             left: 5%;
             top: 5%;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            transform: translateZ(-20px);
-            opacity: 0.2;
-            filter: blur(10px);
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            transform: translateZ(-40px);
+            opacity: 0.3;
+            filter: blur(15px);
         }
 
         @keyframes float {
@@ -199,7 +219,7 @@
                 transform: translateY(0) rotateY(0);
             }
             50% {
-                transform: translateY(-20px) rotateY(5deg);
+                transform: translateY(-20px) rotateY(10deg);
             }
         }
 
@@ -218,6 +238,7 @@
             padding: 10px 20px;
             border-radius: 50px;
             backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .contact-item i {
@@ -237,6 +258,25 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             margin-right: 20px;
             margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #4ecdc4, #ff6b6b);
+            transition: left 0.5s;
+            z-index: -1;
+        }
+
+        .cta-button:hover::before {
+            left: 0;
         }
 
         .cta-button:hover {
@@ -283,10 +323,28 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             transition: transform 0.5s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .objective-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.7s;
+        }
+
+        .objective-card:hover::before {
+            left: 100%;
         }
 
         .objective-card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .objective-card h3 {
@@ -310,18 +368,41 @@
             overflow: hidden;
             backdrop-filter: blur(10px);
             margin-bottom: 40px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
         .academic-table th {
-            background: rgba(78, 205, 196, 0.2);
+            background: linear-gradient(90deg, rgba(255, 107, 107, 0.3), rgba(78, 205, 196, 0.3));
             padding: 20px;
             text-align: left;
             font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .academic-table th::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .academic-table th:hover::before {
+            left: 100%;
         }
 
         .academic-table td {
             padding: 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background-color 0.3s;
+        }
+
+        .academic-table tr:hover td {
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .academic-table tr:last-child td {
@@ -343,10 +424,29 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: transform 0.5s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(180deg, #ff6b6b, #4ecdc4);
+            transform: scaleY(0);
+            transition: transform 0.5s;
+        }
+
+        .skill-category:hover::before {
+            transform: scaleY(1);
         }
 
         .skill-category:hover {
-            transform: translateY(-10px);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .skill-category h3 {
@@ -367,6 +467,14 @@
             padding: 8px 16px;
             border-radius: 50px;
             font-size: 0.9rem;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            transition: all 0.3s;
+        }
+
+        .skill-item:hover {
+            background: rgba(255, 107, 107, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.2);
         }
 
         /* Projects */
@@ -382,13 +490,30 @@
         }
 
         .project-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(-15px) scale(1.01);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
         }
 
         .project-header {
             background: linear-gradient(90deg, rgba(255, 107, 107, 0.2), rgba(78, 205, 196, 0.2));
             padding: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s;
+        }
+
+        .project-card:hover .project-header::before {
+            left: 100%;
         }
 
         .project-header h3 {
@@ -424,6 +549,14 @@
             padding: 5px 12px;
             border-radius: 20px;
             font-size: 0.85rem;
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            transition: all 0.3s;
+        }
+
+        .keyword:hover {
+            background: rgba(78, 205, 196, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.2);
         }
 
         /* Achievements & Certifications */
@@ -440,7 +573,8 @@
         }
 
         .achievement-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .achievement-card h3 {
@@ -457,6 +591,13 @@
             width: 100%;
             height: 5px;
             background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s;
+        }
+
+        .achievement-card:hover::before {
+            transform: scaleX(1);
         }
 
         .cert-table {
@@ -466,6 +607,7 @@
             border-radius: 10px;
             overflow: hidden;
             margin-top: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
         .cert-table th {
@@ -477,6 +619,11 @@
         .cert-table td {
             padding: 15px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background-color 0.3s;
+        }
+
+        .cert-table tr:hover td {
+            background: rgba(255, 255, 255, 0.05);
         }
 
         /* Footer */
@@ -512,11 +659,29 @@
             color: #f0f0f0;
             font-size: 1.2rem;
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .social-links a:hover::before {
+            left: 100%;
         }
 
         .social-links a:hover {
             background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
-            transform: translateY(-5px);
+            transform: translateY(-5px) rotate(10deg);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
         /* Responsive Design */
@@ -532,6 +697,7 @@
             
             .photo-container {
                 flex: 0 0 300px;
+                order: -1;
             }
             
             .photo-frame {
@@ -559,11 +725,13 @@
                 top: 100px;
                 left: 0;
                 width: 100%;
-                background: rgba(10, 10, 22, 0.95);
+                background: rgba(10, 10, 22, 0.98);
                 flex-direction: column;
                 padding: 20px;
-                backdrop-filter: blur(10px);
+                backdrop-filter: blur(20px);
                 z-index: 1000;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             }
 
             .nav-links.active {
@@ -621,6 +789,32 @@
                 width: 200px;
                 height: 200px;
             }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* 3D Particle Info */
+        .particle-info {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+            z-index: 1000;
+        }
+
+        .particle-info:hover {
+            opacity: 1;
         }
     </style>
 </head>
@@ -654,7 +848,7 @@
             <div class="hero-content">
                 <h1>BITTU KUMAR (RAJ)</h1>
                 <h2>B.Tech, Computer Science & Engineering</h2>
-                <p>Passionate software developer with expertise in C/C++, Data Structures, Algorithms, and emerging technologies. Qualified GATE 2025 (CSE) .</p>
+                <p>Passionate software developer with expertise in C/C++, Data Structures, Algorithms, and emerging technologies. GATE 2024 qualified with a score of 370.</p>
                 
                 <div class="contact-info">
                     <div class="contact-item">
@@ -838,7 +1032,7 @@
             </div>
             
             <div class="achievement-card">
-                <h3> Qualified GATE 2025 (CSE) </h3>
+                <h3>GATE 2024 Qualified</h3>
                 <p>Achieved GATE score of 370 in Computer Science and Information Technology, demonstrating strong conceptual knowledge and problem-solving abilities in core CS subjects.</p>
             </div>
             
@@ -922,9 +1116,17 @@
         </footer>
     </div>
 
+    <!-- Particle Info -->
+    <div class="particle-info">
+        <i class="fas fa-magic"></i> Interactive 3D Background
+    </div>
+
     <script>
-        // Three.js 3D Background Animation
+        // Enhanced Three.js 3D Background Animation
         let scene, camera, renderer, particles, particleSystem;
+        let particleCount = 3000; // Increased particle count
+        let particleGeometry, particleMaterial;
+        let mouseX = 0, mouseY = 0;
         
         function initThreeJS() {
             // Create scene
@@ -932,62 +1134,130 @@
             
             // Create camera
             camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 5;
+            camera.position.z = 15;
             
             // Create renderer
-            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer = new THREE.WebGLRenderer({ 
+                alpha: true, 
+                antialias: true,
+                powerPreference: "high-performance"
+            });
             renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setClearColor(0x000000, 0);
             document.getElementById('three-container').appendChild(renderer.domElement);
             
-            // Create particle system
-            const particleCount = 2000;
-            particles = new THREE.BufferGeometry();
+            // Create particle system with different shapes
+            particleGeometry = new THREE.BufferGeometry();
             const positions = new Float32Array(particleCount * 3);
             const colors = new Float32Array(particleCount * 3);
+            const sizes = new Float32Array(particleCount);
             
-            // Create color gradient
+            // Color gradients
             const color1 = new THREE.Color(0xff6b6b); // Red
             const color2 = new THREE.Color(0x4ecdc4); // Teal
+            const color3 = new THREE.Color(0x556270); // Dark Blue
+            const color4 = new THREE.Color(0xffcc5c); // Yellow
             
-            for (let i = 0; i < particleCount * 3; i += 3) {
-                // Positions
-                positions[i] = (Math.random() - 0.5) * 40;
-                positions[i + 1] = (Math.random() - 0.5) * 40;
-                positions[i + 2] = (Math.random() - 0.5) * 40;
+            // Create a torus/ring shaped particle distribution
+            const radius = 20;
+            const tube = 8;
+            
+            for (let i = 0; i < particleCount; i++) {
+                // Create particles in a torus shape
+                const u = Math.random() * Math.PI * 2;
+                const v = Math.random() * Math.PI * 2;
                 
-                // Colors - gradient between color1 and color2
-                const mix = Math.random();
-                const color = color1.clone().lerp(color2, mix);
+                const x = (radius + tube * Math.cos(v)) * Math.cos(u);
+                const y = (radius + tube * Math.cos(v)) * Math.sin(u);
+                const z = tube * Math.sin(v);
                 
-                colors[i] = color.r;
-                colors[i + 1] = color.g;
-                colors[i + 2] = color.b;
+                positions[i * 3] = x;
+                positions[i * 3 + 1] = y;
+                positions[i * 3 + 2] = z;
+                
+                // Create vibrant color gradient
+                const mix1 = Math.random();
+                const mix2 = Math.random();
+                let color;
+                
+                if (Math.random() > 0.5) {
+                    color = color1.clone().lerp(color2, mix1);
+                } else {
+                    color = color3.clone().lerp(color4, mix2);
+                }
+                
+                // Add some randomness to colors
+                color.r += (Math.random() - 0.5) * 0.2;
+                color.g += (Math.random() - 0.5) * 0.2;
+                color.b += (Math.random() - 0.5) * 0.2;
+                
+                colors[i * 3] = color.r;
+                colors[i * 3 + 1] = color.g;
+                colors[i * 3 + 2] = color.b;
+                
+                // Varying sizes
+                sizes[i] = Math.random() * 0.2 + 0.05;
             }
             
-            particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            particles.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            particleGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
             
-            // Material
-            const particleMaterial = new THREE.PointsMaterial({
-                size: 0.05,
+            // Advanced particle material
+            particleMaterial = new THREE.PointsMaterial({
+                size: 0.1,
                 vertexColors: true,
                 transparent: true,
-                opacity: 0.7
+                opacity: 0.8,
+                sizeAttenuation: true,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false
             });
             
-            // Particle system
-            particleSystem = new THREE.Points(particles, particleMaterial);
+            // Create multiple particle systems for better effect
+            particleSystem = new THREE.Points(particleGeometry, particleMaterial);
             scene.add(particleSystem);
             
-            // Add lighting
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            // Add a second smaller particle system
+            const particleGeometry2 = particleGeometry.clone();
+            const positions2 = particleGeometry2.getAttribute('position');
+            for (let i = 0; i < positions2.count; i++) {
+                positions2.setXYZ(
+                    i,
+                    positions2.getX(i) * 0.7,
+                    positions2.getY(i) * 0.7,
+                    positions2.getZ(i) * 0.7
+                );
+            }
+            positions2.needsUpdate = true;
+            
+            const particleMaterial2 = particleMaterial.clone();
+            particleMaterial2.size = 0.05;
+            particleMaterial2.opacity = 0.6;
+            
+            const particleSystem2 = new THREE.Points(particleGeometry2, particleMaterial2);
+            scene.add(particleSystem2);
+            
+            // Add ambient and point lights for better 3D effect
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
             scene.add(ambientLight);
             
-            // Add directional light for 3D effect on photo
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-            directionalLight.position.set(5, 5, 5);
-            scene.add(directionalLight);
+            // Multiple colored point lights
+            const pointLight1 = new THREE.PointLight(0xff6b6b, 1, 100);
+            pointLight1.position.set(20, 20, 20);
+            scene.add(pointLight1);
+            
+            const pointLight2 = new THREE.PointLight(0x4ecdc4, 1, 100);
+            pointLight2.position.set(-20, -20, 20);
+            scene.add(pointLight2);
+            
+            const pointLight3 = new THREE.PointLight(0xffcc5c, 0.5, 100);
+            pointLight3.position.set(20, -20, -20);
+            scene.add(pointLight3);
+            
+            // Mouse move interaction
+            document.addEventListener('mousemove', onMouseMove);
             
             // Handle window resize
             window.addEventListener('resize', onWindowResize);
@@ -996,25 +1266,83 @@
             animate();
         }
         
+        function onMouseMove(event) {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        }
+        
         function onWindowResize() {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
         
+        let time = 0;
+        
         function animate() {
             requestAnimationFrame(animate);
             
-            // Rotate particle system
-            particleSystem.rotation.x += 0.001;
-            particleSystem.rotation.y += 0.002;
+            time += 0.01;
             
-            // Move particles for floating effect
-            const positions = particleSystem.geometry.attributes.position.array;
-            for (let i = 0; i < positions.length; i += 3) {
-                positions[i + 1] += 0.01 * Math.sin(Date.now() * 0.001 + i);
+            // Rotate particle systems with multiple rotations
+            particleSystem.rotation.x = time * 0.1;
+            particleSystem.rotation.y = time * 0.15;
+            particleSystem.rotation.z = time * 0.05;
+            
+            // Second system rotates in opposite direction
+            scene.children[2].rotation.x = -time * 0.08;
+            scene.children[2].rotation.y = -time * 0.12;
+            scene.children[2].rotation.z = -time * 0.03;
+            
+            // Mouse interaction - move particles based on mouse position
+            const positions = particleSystem.geometry.attributes.position;
+            const sizes = particleSystem.geometry.attributes.size;
+            
+            for (let i = 0; i < positions.count; i++) {
+                const x = positions.getX(i);
+                const y = positions.getY(i);
+                const z = positions.getZ(i);
+                
+                // Create wave effects
+                const waveX = Math.sin(time + x * 0.1) * 0.5;
+                const waveY = Math.cos(time + y * 0.1) * 0.5;
+                const waveZ = Math.sin(time + z * 0.1) * 0.5;
+                
+                // Mouse attraction
+                const dx = x - mouseX * 10;
+                const dy = y - mouseY * 10;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < 10) {
+                    const force = (10 - distance) * 0.01;
+                    positions.setXYZ(
+                        i,
+                        x + dx * force + waveX,
+                        y + dy * force + waveY,
+                        z + waveZ
+                    );
+                    
+                    // Make particles bigger when near mouse
+                    sizes.setX(i, Math.min(0.3, 0.1 + (10 - distance) * 0.02));
+                } else {
+                    positions.setXYZ(i, x + waveX, y + waveY, z + waveZ);
+                    sizes.setX(i, 0.05 + Math.sin(time + i) * 0.02);
+                }
             }
-            particleSystem.geometry.attributes.position.needsUpdate = true;
+            
+            positions.needsUpdate = true;
+            sizes.needsUpdate = true;
+            
+            // Move lights around for dynamic lighting
+            const light1 = scene.children[3];
+            light1.position.x = Math.sin(time * 0.5) * 30;
+            light1.position.y = Math.cos(time * 0.5) * 30;
+            light1.position.z = Math.sin(time * 0.3) * 20;
+            
+            const light2 = scene.children[4];
+            light2.position.x = Math.cos(time * 0.7) * 25;
+            light2.position.y = Math.sin(time * 0.7) * 25;
+            light2.position.z = Math.cos(time * 0.4) * 15;
             
             renderer.render(scene, camera);
         }
@@ -1023,9 +1351,22 @@
         window.addEventListener('load', initThreeJS);
         
         // Mobile menu functionality
-        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuBtn.addEventListener('click', function() {
             navLinks.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
         });
         
         // Smooth scrolling for navigation links
@@ -1042,76 +1383,72 @@
                         top: targetElement.offsetTop - 80,
                         behavior: 'smooth'
                     });
-                    
-                    // Close mobile menu if open
-                    if (window.innerWidth <= 768) {
-                        document.querySelector('.nav-links').classList.remove('active');
-                    }
                 }
             });
         });
         
-        // Add 3D effect to profile photo on mouse move
+        // Enhanced 3D effect to profile photo on mouse move
         const photoFrame = document.querySelector('.photo-frame');
-        const photoImage = document.querySelector('.photo-image');
+        const photoImage = document.getElementById('profile-photo');
         
         photoFrame.addEventListener('mousemove', (e) => {
             const { left, top, width, height } = photoFrame.getBoundingClientRect();
             const x = (e.clientX - left) / width - 0.5;
             const y = (e.clientY - top) / height - 0.5;
             
-            photoImage.style.transform = `translateZ(30px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg)`;
+            photoImage.style.transform = `translateZ(40px) rotateY(${x * 20}deg) rotateX(${-y * 20}deg)`;
+            photoImage.style.filter = `brightness(${1.2 + Math.abs(x + y) * 0.3})`;
         });
         
         photoFrame.addEventListener('mouseleave', () => {
             photoImage.style.transform = 'translateZ(20px) rotateY(0) rotateX(0)';
+            photoImage.style.filter = 'brightness(1)';
         });
         
-        // Add hover effects to project cards
-        document.querySelectorAll('.project-card, .objective-card, .skill-category, .achievement-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.zIndex = '100';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.zIndex = '1';
-            });
+        // Handle photo loading - provide fallback
+        photoImage.addEventListener('error', function() {
+            console.log('Photo not found, using gradient fallback');
+            this.style.background = 'linear-gradient(45deg, #ff6b6b, #4ecdc4)';
+            this.style.display = 'flex';
+            this.style.alignItems = 'center';
+            this.style.justifyContent = 'center';
+            this.style.color = 'white';
+            this.style.fontSize = '2.5rem';
+            this.style.fontWeight = 'bold';
+            this.innerHTML = 'BK';
+            this.alt = 'Bittu Kumar - Photo placeholder';
         });
         
-        // Add animation on scroll
-        function animateOnScroll() {
-            const elements = document.querySelectorAll('.project-card, .objective-card, .skill-category, .achievement-card, .photo-frame');
-            
-            elements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
-                
-                if (elementTop < windowHeight - 100) {
-                    element.style.opacity = '1';
-                    element.style.transform = element.classList.contains('photo-frame') ? 
-                        'translateY(0)' : element.style.transform.includes('translateY') ? 
-                        element.style.transform : 'translateY(0)';
+        // Check if photo exists
+        window.addEventListener('load', function() {
+            fetch('your-photo.jpg')
+                .then(response => {
+                    if (!response.ok) {
+                        photoImage.dispatchEvent(new Event('error'));
+                    }
+                })
+                .catch(() => {
+                    photoImage.dispatchEvent(new Event('error'));
+                });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
                 }
             });
-        }
+        }, observerOptions);
         
-        // Set initial state for animated elements
-        document.querySelectorAll('.project-card, .objective-card, .skill-category, .achievement-card, .photo-frame').forEach(element => {
-            if (!element.classList.contains('photo-frame')) {
-                element.style.opacity = '0';
-                element.style.transform = 'translateY(30px)';
-                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            }
-        });
-        
-        // Trigger animation on load and scroll
-        window.addEventListener('load', animateOnScroll);
-        window.addEventListener('scroll', animateOnScroll);
-        
-        // Handle photo loading error
-        photoImage.addEventListener('error', function() {
-            this.src = 'https://via.placeholder.com/350x350/ff6b6b/4ecdc4?text=Bittu+Kumar';
-            console.log('Default placeholder image loaded. Please replace "your-photo.jpg" with your actual photo.');
+        // Observe elements for animation
+        document.querySelectorAll('.objective-card, .skill-category, .project-card, .achievement-card').forEach(el => {
+            observer.observe(el);
         });
     </script>
 </body>
