@@ -102,9 +102,11 @@
             display: flex;
             align-items: center;
             padding: 60px 0;
+            gap: 50px;
         }
 
         .hero-content {
+            flex: 1;
             max-width: 700px;
         }
 
@@ -131,6 +133,74 @@
             margin-bottom: 30px;
             max-width: 600px;
             opacity: 0.8;
+        }
+
+        /* 3D Photo Container */
+        .photo-container {
+            flex: 0 0 350px;
+            perspective: 1000px;
+        }
+
+        .photo-frame {
+            width: 350px;
+            height: 350px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .photo-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            object-fit: cover;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            border: 3px solid transparent;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4) border-box;
+            background-origin: border-box;
+            background-clip: content-box, border-box;
+            transform: translateZ(20px);
+            transition: transform 0.5s;
+        }
+
+        .photo-frame:hover .photo-image {
+            transform: translateZ(30px) rotateY(10deg);
+        }
+
+        .photo-frame::before,
+        .photo-frame::after {
+            content: '';
+            position: absolute;
+            border-radius: 20px;
+            transform-style: preserve-3d;
+        }
+
+        .photo-frame::before {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #4ecdc4, #ff6b6b);
+            transform: translateZ(-10px);
+            opacity: 0.3;
+        }
+
+        .photo-frame::after {
+            width: 90%;
+            height: 90%;
+            left: 5%;
+            top: 5%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            transform: translateZ(-20px);
+            opacity: 0.2;
+            filter: blur(10px);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotateY(0);
+            }
+            50% {
+                transform: translateY(-20px) rotateY(5deg);
+            }
         }
 
         .contact-info {
@@ -365,6 +435,8 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             margin-bottom: 30px;
             transition: transform 0.5s;
+            position: relative;
+            overflow: hidden;
         }
 
         .achievement-card:hover {
@@ -375,6 +447,16 @@
             color: #4ecdc4;
             margin-bottom: 15px;
             font-size: 1.5rem;
+        }
+
+        .achievement-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
         }
 
         .cert-table {
@@ -438,6 +520,27 @@
         }
 
         /* Responsive Design */
+        @media (max-width: 1100px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-content {
+                max-width: 100%;
+            }
+            
+            .photo-container {
+                flex: 0 0 300px;
+            }
+            
+            .photo-frame {
+                width: 300px;
+                height: 300px;
+                margin: 0 auto;
+            }
+        }
+
         @media (max-width: 992px) {
             .hero h1 {
                 font-size: 2.8rem;
@@ -452,6 +555,19 @@
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
+                position: absolute;
+                top: 100px;
+                left: 0;
+                width: 100%;
+                background: rgba(10, 10, 22, 0.95);
+                flex-direction: column;
+                padding: 20px;
+                backdrop-filter: blur(10px);
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                display: flex;
             }
 
             .mobile-menu-btn {
@@ -474,6 +590,15 @@
             .skills-container {
                 grid-template-columns: 1fr;
             }
+            
+            .photo-container {
+                flex: 0 0 250px;
+            }
+            
+            .photo-frame {
+                width: 250px;
+                height: 250px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -486,6 +611,15 @@
                 width: 100%;
                 text-align: center;
                 margin-right: 0;
+            }
+            
+            .photo-container {
+                flex: 0 0 200px;
+            }
+            
+            .photo-frame {
+                width: 200px;
+                height: 200px;
             }
         }
     </style>
@@ -515,12 +649,12 @@
             </nav>
         </header>
 
-        <!-- Hero Section -->
+        <!-- Hero Section with 3D Photo -->
         <section class="hero" id="home">
             <div class="hero-content">
-                <h1>BITTU KUMAR (RAJ) </h1>
+                <h1>BITTU KUMAR (RAJ)</h1>
                 <h2>B.Tech, Computer Science & Engineering</h2>
-                <p>Passionate software developer with expertise in C/C++, Data Structures, Algorithms, and emerging technologies. GATE 2024 qualified with a score of 370.</p>
+                <p>Passionate software developer with expertise in C/C++, Data Structures, Algorithms, and emerging technologies. Qualified GATE 2025 (CSE) .</p>
                 
                 <div class="contact-info">
                     <div class="contact-item">
@@ -539,6 +673,13 @@
                 
                 <a href="#contact" class="cta-button">Contact Me</a>
                 <a href="https://www.linkedin.com/in/rj-64757121a" target="_blank" class="cta-button secondary">LinkedIn Profile</a>
+            </div>
+            
+            <!-- 3D Photo Section -->
+            <div class="photo-container">
+                <div class="photo-frame">
+                    <img src="your-photo.jpg" alt="Bittu Kumar" class="photo-image" id="profile-photo">
+                </div>
             </div>
         </section>
 
@@ -688,8 +829,16 @@
         <section id="achievements" class="section-content">
             <h2 class="section-title">Achievements & Certifications</h2>
             
+            <!-- Bihar STET 2025 Achievement -->
             <div class="achievement-card">
-                <h3>GATE 2024 Qualified</h3>
+                <h3>Qualified BIHAR STET 2025</h3>
+                <p><strong>Secondary Teacher Eligibility Test</strong></p>
+                <p>Successfully qualified the Bihar STET 2025 examination for secondary teacher eligibility, demonstrating proficiency in educational concepts and teaching methodologies.</p>
+                <p>This achievement showcases dedication to continuous learning and the ability to master diverse subject domains beyond computer science.</p>
+            </div>
+            
+            <div class="achievement-card">
+                <h3> Qualified GATE 2025 (CSE) </h3>
                 <p>Achieved GATE score of 370 in Computer Science and Information Technology, demonstrating strong conceptual knowledge and problem-solving abilities in core CS subjects.</p>
             </div>
             
@@ -719,6 +868,11 @@
                         <td>AICTE (Eduskills)</td>
                         <td>Networking fundamentals and Juniper platform training</td>
                     </tr>
+                    <tr>
+                        <td>BIHAR STET 2025</td>
+                        <td>Bihar School Examination Board</td>
+                        <td>Qualified Secondary Teacher Eligibility Test</td>
+                    </tr>
                 </tbody>
             </table>
             
@@ -727,6 +881,7 @@
                 <div class="skill-items" style="margin-bottom: 20px;">
                     <span class="skill-item">Languages: English, Hindi</span>
                     <span class="skill-item">Hobbies: Chess, Cricket, Badminton</span>
+                    <span class="skill-item">Teaching: Qualified Bihar STET 2025</span>
                 </div>
             </div>
         </section>
@@ -736,7 +891,7 @@
             <div class="footer-content">
                 <div>
                     <h3>BITTU KUMAR (RAJ)</h3>
-                    <p>Computer Science & Engineering Graduate | GATE Qualified</p>
+                    <p>Computer Science & Engineering Graduate | GATE Qualified | Bihar STET 2025 Qualified</p>
                 </div>
                 
                 <div class="contact-info">
@@ -829,6 +984,11 @@
             const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
             scene.add(ambientLight);
             
+            // Add directional light for 3D effect on photo
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(5, 5, 5);
+            scene.add(directionalLight);
+            
             // Handle window resize
             window.addEventListener('resize', onWindowResize);
             
@@ -865,7 +1025,7 @@
         // Mobile menu functionality
         document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
             const navLinks = document.querySelector('.nav-links');
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            navLinks.classList.toggle('active');
         });
         
         // Smooth scrolling for navigation links
@@ -885,10 +1045,26 @@
                     
                     // Close mobile menu if open
                     if (window.innerWidth <= 768) {
-                        document.querySelector('.nav-links').style.display = 'none';
+                        document.querySelector('.nav-links').classList.remove('active');
                     }
                 }
             });
+        });
+        
+        // Add 3D effect to profile photo on mouse move
+        const photoFrame = document.querySelector('.photo-frame');
+        const photoImage = document.querySelector('.photo-image');
+        
+        photoFrame.addEventListener('mousemove', (e) => {
+            const { left, top, width, height } = photoFrame.getBoundingClientRect();
+            const x = (e.clientX - left) / width - 0.5;
+            const y = (e.clientY - top) / height - 0.5;
+            
+            photoImage.style.transform = `translateZ(30px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg)`;
+        });
+        
+        photoFrame.addEventListener('mouseleave', () => {
+            photoImage.style.transform = 'translateZ(20px) rotateY(0) rotateX(0)';
         });
         
         // Add hover effects to project cards
@@ -904,7 +1080,7 @@
         
         // Add animation on scroll
         function animateOnScroll() {
-            const elements = document.querySelectorAll('.project-card, .objective-card, .skill-category, .achievement-card');
+            const elements = document.querySelectorAll('.project-card, .objective-card, .skill-category, .achievement-card, .photo-frame');
             
             elements.forEach(element => {
                 const elementTop = element.getBoundingClientRect().top;
@@ -912,21 +1088,31 @@
                 
                 if (elementTop < windowHeight - 100) {
                     element.style.opacity = '1';
-                    element.style.transform = 'translateY(0)';
+                    element.style.transform = element.classList.contains('photo-frame') ? 
+                        'translateY(0)' : element.style.transform.includes('translateY') ? 
+                        element.style.transform : 'translateY(0)';
                 }
             });
         }
         
         // Set initial state for animated elements
-        document.querySelectorAll('.project-card, .objective-card, .skill-category, .achievement-card').forEach(element => {
-            element.style.opacity = '0';
-            element.style.transform = 'translateY(30px)';
-            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        document.querySelectorAll('.project-card, .objective-card, .skill-category, .achievement-card, .photo-frame').forEach(element => {
+            if (!element.classList.contains('photo-frame')) {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(30px)';
+                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            }
         });
         
         // Trigger animation on load and scroll
         window.addEventListener('load', animateOnScroll);
         window.addEventListener('scroll', animateOnScroll);
+        
+        // Handle photo loading error
+        photoImage.addEventListener('error', function() {
+            this.src = 'https://via.placeholder.com/350x350/ff6b6b/4ecdc4?text=Bittu+Kumar';
+            console.log('Default placeholder image loaded. Please replace "your-photo.jpg" with your actual photo.');
+        });
     </script>
 </body>
 </html>
